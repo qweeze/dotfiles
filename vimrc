@@ -20,8 +20,6 @@ set ruler
 
 set clipboard=unnamedplus
 
-colo slate
-
 " Enhance command-line completion
 set wildmenu
 " Optimize for fast terminal connections
@@ -41,6 +39,7 @@ set shortmess=atI
 " Disable error bells
 set noerrorbells
 
+colo default
 
 " Plugins [https://github.com/junegunn/vim-plug]
 call plug#begin('~/.vim/plugged')
