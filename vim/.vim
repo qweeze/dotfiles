@@ -1,0 +1,1 @@
+/home/qweeze/dotfiles/.vim
