@@ -20,12 +20,16 @@ set ruler
 
 set clipboard=unnamedplus
 
+let mapleader="\<Space>"
+
 " Enhance command-line completion
 set wildmenu
 " Optimize for fast terminal connections
 set ttyfast
 "This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
+"<C-n> for go to next buffer
+nnoremap <C-n> :bn<CR>
 
 " Centralize backups, swapfiles and undo history
 set backupdir=~/.vim/backups
@@ -38,6 +42,8 @@ endif
 set shortmess=atI
 " Disable error bells
 set noerrorbells
+
+command! RefreshConfig source $MYVIMRC <bar> redraw | echohl StatusLineTerm | echom "vimrc reloaded" | echohl None
 
 colo default
 
@@ -56,6 +62,9 @@ let g:airline_theme = 'sol'
 Plug 'jiangmiao/auto-pairs'
 
 Plug 'Vimjas/vim-python-pep8-indent'
+
+Plug 'junegunn/fzf', { 'do': './install --bin'  }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
