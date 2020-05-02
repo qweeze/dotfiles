@@ -45,21 +45,26 @@ set noerrorbells
 
 command! RefreshConfig source $MYVIMRC <bar> redraw | echohl StatusLineTerm | echom "vimrc reloaded" | echohl None
 
-colo default
-
 " Plugins [https://github.com/junegunn/vim-plug]
 call plug#begin('~/.vim/plugged')
 
+Plug 'morhetz/gruvbox'
+let g:gruvbox_bold = 0
+let g:gruvbox_contrast_dark = 'hard'
 Plug 'vim-python/python-syntax', { 'for': 'python' }
 let g:python_highlight_all = 1
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-let g:airline_theme = 'sol' 
+let g:airline_theme = 'gruvbox' 
 Plug 'jiangmiao/auto-pairs'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'junegunn/fzf', { 'do': './install --bin'  }
 Plug 'junegunn/fzf.vim'
 Plug 'davidhalter/jedi-vim'
+Plug 'tpope/vim-commentary'
+Plug 'justinmk/vim-sneak'
 
 call plug#end()
+
+colo gruvbox
 
