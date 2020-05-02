@@ -59,6 +59,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'junegunn/fzf', { 'do': './install --bin'  }
 Plug 'junegunn/fzf.vim'
+Plug 'davidhalter/jedi-vim'
 
 call plug#end()
 
