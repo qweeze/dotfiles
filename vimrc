@@ -52,17 +52,11 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'vim-python/python-syntax', { 'for': 'python' }
 let g:python_highlight_all = 1
-
-" Plug 'preservim/nerdtree'
-"
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_theme = 'sol' 
-
 Plug 'jiangmiao/auto-pairs'
-
 Plug 'Vimjas/vim-python-pep8-indent'
-
 Plug 'junegunn/fzf', { 'do': './install --bin'  }
 Plug 'junegunn/fzf.vim'
 
