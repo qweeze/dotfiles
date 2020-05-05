@@ -37,7 +37,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'do': './install --bin'  }
 Plug 'junegunn/fzf.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+if has("nvim")
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+endif
 Plug 'vim-python/python-syntax', { 'for': 'python' }
 Plug 'tpope/vim-commentary'
 Plug 'justinmk/vim-sneak'
