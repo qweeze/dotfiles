@@ -127,3 +127,8 @@ nnoremap <silent> <Leader><Leader>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent> <Leader><Leader>p  :<C-u>CocListResume<CR>
 
+
+Plug 'liuchengxu/vista.vim'
+let g:vista#renderer#enable_icon = 0
+let g:vista_default_executive = 'coc'
+
