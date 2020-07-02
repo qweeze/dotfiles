@@ -34,13 +34,10 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'morhetz/gruvbox'
 let g:gruvbox_bold = 0
-
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_theme = 'gruvbox' 
-
 Plug 'tpope/vim-fugitive'
-" Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'do': './install --bin'  }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-commentary'
@@ -67,6 +64,9 @@ let g:startify_lists = [
       \ { 'type': 'commands',  'header': ['   Commands']       },
       \ ]
 let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'bkad/CamelCaseMotion'
+map <silent> <leader>w <Plug>CamelCaseMotion_w
 
 
 " Extension point
@@ -98,4 +98,5 @@ map <Leader>k :wincmd k<CR>
 map <Leader>l :wincmd l<CR>
 map <Leader>h :wincmd h<CR>
 
-
+" Auto source vimrc on save
+autocmd! bufwritepost ~/.vimrc source $MYVIMRC
