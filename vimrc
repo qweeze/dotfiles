@@ -40,6 +40,8 @@ let g:airline_theme = 'gruvbox'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf', { 'do': './install --bin'  }
 Plug 'junegunn/fzf.vim'
+" https://github.com/junegunn/fzf.vim/issues/714
+command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
 Plug 'tpope/vim-commentary'
 Plug 'justinmk/vim-sneak'
 Plug 'ekalinin/Dockerfile.vim'
@@ -67,6 +69,11 @@ let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'bkad/CamelCaseMotion'
 map <silent> <leader>w <Plug>CamelCaseMotion_w
+Plug 'bfredl/nvim-ipy'
+Plug 'rakr/vim-one'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+let g:go_def_mapping_enabled = 0
+Plug 'glench/vim-jinja2-syntax'
 
 
 " Extension point
@@ -83,6 +90,7 @@ augroup qs_colors
 augroup END
 colo gruvbox
 set background=dark
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 
 " Mappings
 imap jk <Esc>

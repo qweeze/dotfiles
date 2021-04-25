@@ -24,7 +24,7 @@ autocmd  FileType which_key set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler
 
 tnoremap <Esc> <C-\><C-n>
-tnoremap <C-t>t <C-\><C-n>:FloatermToggle<CR>
+tnoremap <C-t>t <C-\><C-n>:FloatermToggle!<CR>
 tnoremap <C-t>T <C-\><C-n>:FloatermNew<CR>
 tnoremap <C-t>n <C-\><C-n>:FloatermNext<CR>
 tnoremap <C-t>p <C-\><C-n>:FloatermPrev<CR>
