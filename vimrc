@@ -74,7 +74,9 @@ Plug 'rakr/vim-one'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 let g:go_def_mapping_enabled = 0
 Plug 'glench/vim-jinja2-syntax'
-
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+let g:vim_markdown_folding_disabled = 1
 
 " Extension point
 if filereadable(expand('~/.vim/extra.vimrc'))
