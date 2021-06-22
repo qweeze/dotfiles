@@ -41,7 +41,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf', { 'do': './install --bin'  }
 Plug 'junegunn/fzf.vim'
 " https://github.com/junegunn/fzf.vim/issues/714
-command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
+command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': []}), <bang>0)
 Plug 'tpope/vim-commentary'
 Plug 'justinmk/vim-sneak'
 Plug 'ekalinin/Dockerfile.vim'
@@ -57,6 +57,8 @@ Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
 Plug 'voldikss/vim-floaterm'
 let g:floaterm_position = 'bottomright'
 let g:floaterm_height = 35
+let g:floaterm_title = 'term[$1/$2]'
+let g:floaterm_autoclose = 1
 Plug 'mhinz/vim-startify'
 let g:startify_lists = [
       \ { 'type': 'sessions',  'header': ['   Sessions']       },
@@ -89,6 +91,7 @@ augroup qs_colors
   autocmd!
   autocmd ColorScheme * highlight QuickScopePrimary gui=underline ctermfg=yellow cterm=underline
   autocmd ColorScheme * highlight QuickScopeSecondary gui=underline ctermfg=lightyellow cterm=underline
+  autocmd ColorScheme * highlight FloatermBorder guibg=black
 augroup END
 colo gruvbox
 set background=dark
