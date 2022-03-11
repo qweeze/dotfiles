@@ -46,6 +46,12 @@ let g:which_key_map.a = {
       \ 'a' : [':let @/ = ""'            , 'remove search highlight'],
       \ }
 
+" a is for run
+let g:which_key_map.r = {
+      \ 'name' : '+run' ,
+      \ 'r' : [':!python %'            , 'run python'],
+      \ }
+
 " s is for search
 let g:which_key_map.s = {
       \ 'name' : '+search' ,

@@ -41,7 +41,19 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf', { 'do': './install --bin'  }
 Plug 'junegunn/fzf.vim'
 " https://github.com/junegunn/fzf.vim/issues/714
-command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': []}), <bang>0)
+command! -bang -nargs=* Rg call fzf#vim#grep(
+    \"rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>),
+    \ 1,
+    \ fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:40%'), 
+    \ <bang>0)
+
+" https://github.com/junegunn/fzf.vim/issues/374
+command! -bang -nargs=* BLines
+    \ call fzf#vim#grep(
+    \   'rg --with-filename --column --line-number --no-heading --smart-case . '.fnameescape(expand('%:p')), 1,
+    \   fzf#vim#with_preview({'options': '--layout reverse --query '.shellescape(<q-args>).' --with-nth=4.. --delimiter=":"'}, 'right:50%'))
+    " \   fzf#vim#with_preview({'options': '--layout reverse  --with-nth=-1.. --delimiter="/"'}, 'right:50%'))
+
 Plug 'tpope/vim-commentary'
 Plug 'justinmk/vim-sneak'
 Plug 'ekalinin/Dockerfile.vim'
@@ -99,6 +111,7 @@ set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNO
 
 " Mappings
 imap jk <Esc>
+" imap ол <Esc>
 nnoremap <C-p> <C-i>
 nnoremap <CR> :noh<CR>:<Backspace><CR>  " This unsets the "last search pattern" register by hitting return
 " nnoremap <Leader>x :bd<CR>  " Close buffer
@@ -110,6 +123,10 @@ map <Leader>j :wincmd j<CR>
 map <Leader>k :wincmd k<CR>
 map <Leader>l :wincmd l<CR>
 map <Leader>h :wincmd h<CR>
+map <Leader>w :w<CR>
 
 " Auto source vimrc on save
 autocmd! bufwritepost ~/.vimrc source $MYVIMRC
+
+" https://github.com/neoclide/coc.nvim/wiki/Using-workspaceFolders#resolve-workspace-folder
+autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'venv', 'setup.cfg', 'pyproject.toml']

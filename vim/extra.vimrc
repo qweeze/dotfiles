@@ -1,3 +1,16 @@
+" Swift syntax support
+Plug 'keith/swift.vim'
+" Kotlin syntax support
+Plug 'udalov/kotlin-vim'
+" SML syntax support
+Plug 'jez/vim-better-sml'
+" Racket support
+Plug 'wlangstroth/vim-racket'
+
+" JS / TS
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-python/python-syntax', { 'for': 'python' }
