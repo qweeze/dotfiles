@@ -89,7 +89,7 @@ let g:which_key_map.g = {
       \ 'd' : [':Git diff'                         , 'diff'],
       \ 'D' : [':Gdiffsplit'                       , 'diff split'],
       \ 'g' : [':GGrep'                            , 'git grep'],
-      \ 'G' : [':Gstatus'                          , 'status'],
+      \ 'G' : [':Git status'                       , 'status'],
       \ 'h' : [':GitGutterLineHighlightsToggle'    , 'highlight hunks'],
       \ 'H' : ['<Plug>(GitGutterPreviewHunk)'      , 'preview hunk'],
       \ 'j' : ['<Plug>(GitGutterNextHunk)'         , 'next hunk'],

@@ -117,7 +117,7 @@ nnoremap <CR> :noh<CR>:<Backspace><CR>  " This unsets the "last search pattern" 
 " nnoremap <Leader>x :bd<CR>  " Close buffer
 nnoremap <Leader><Leader>f :Rg<CR>
 " nnoremap <Leader>p :Files<CR>
-nnoremap <expr> <Leader>o fugitive#head() != '' ? ':GFiles<CR>' : ':Files<CR>'
+nnoremap <expr> <Leader>o FugitiveHead() != '' ? ':GFiles<CR>' : ':Files<CR>'
 " nnoremap <Leader>b :Buffers<CR>
 map <Leader>j :wincmd j<CR>
 map <Leader>k :wincmd k<CR>
