@@ -91,6 +91,10 @@ Plug 'glench/vim-jinja2-syntax'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 let g:vim_markdown_folding_disabled = 1
+" Plug 'lyokha/vim-xkbswitch'
+" let g:XkbSwitchLib = '/usr/local/lib/libxkbswitch.dylib'
+" let g:XkbSwitchEnabled = 1
+" let g:XkbSwitchILayout = 'ru'
 
 " Extension point
 if filereadable(expand('~/.vim/extra.vimrc'))
@@ -107,7 +111,6 @@ augroup qs_colors
 augroup END
 colo gruvbox
 set background=dark
-set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 
 " Mappings
 imap jk <Esc>
@@ -129,4 +132,15 @@ map <Leader>w :w<CR>
 autocmd! bufwritepost ~/.vimrc source $MYVIMRC
 
 " https://github.com/neoclide/coc.nvim/wiki/Using-workspaceFolders#resolve-workspace-folder
-autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'venv', 'setup.cfg', 'pyproject.toml']
+autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'venv', 'setup.cfg', 'pyproject.toml', '.venv']
+
+
+" scroll floating popups in insert mode
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif

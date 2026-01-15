@@ -11,6 +11,9 @@ Plug 'wlangstroth/vim-racket'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
+" Svelte highlight
+Plug 'leafOfTree/vim-svelte-plugin'
+
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-python/python-syntax', { 'for': 'python' }
