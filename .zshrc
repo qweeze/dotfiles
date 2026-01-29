@@ -44,8 +44,8 @@ socksproxy () {
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 
-export REQUESTS_CA_BUNDLE="$HOME/tochka/ca.pem"
-export SSL_CERT_FILE="$HOME/tochka/ca.pem"
+export REQUESTS_CA_BUNDLE="$HOME/ca.pem"
+export SSL_CERT_FILE="$HOME/ca.pem"
 export BAT_THEME="gruvbox-dark"
 
 # ipdb debugger
