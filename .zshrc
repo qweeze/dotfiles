@@ -1,5 +1,7 @@
 autoload -U colors && colors
 PROMPT="%m %{${fg_bold[red]}%}:: %{${fg[green]}%}%3~%(0?. . %{${fg[red]}%}%? )%{${fg[blue]}%}»%{${reset_color}%} "
+setopt interactive_comments
+EDITOR=nvim
 
 # limitless zsh history
 HISTFILE=~/.zsh_history

@@ -12,4 +12,9 @@ brew install postgresql
 brew install ripgrep
 
 ./install.sh
+
+cat << EOF > ~/.ipython/profile_default/ipython_config.py
+heredoc> c = get_config()
+c.InteractiveShellApp.extensions.append("autoreload")
+EOF
 ```

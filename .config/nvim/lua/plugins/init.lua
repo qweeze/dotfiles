@@ -7,14 +7,6 @@ return {
     priority = 1000,
     config = function()
       require("gruvbox").setup({
-        bold = false,
-        italic = {
-          strings = false,
-          comments = true,
-          operators = false,
-          folds = true,
-        },
-        contrast = "",
       })
       vim.cmd.colorscheme("gruvbox")
     end,
