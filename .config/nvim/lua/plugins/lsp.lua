@@ -138,6 +138,16 @@ return {
         },
       })
 
+
+      -- Python
+      -- vim.lsp.config('ruff', {
+      --   init_options = {
+      --     settings = {
+      --       logLevel = 'info',
+      --     }
+      --   }
+      -- })
+
       -- Python
       vim.lsp.config("pyright", {
         capabilities = capabilities,
@@ -222,6 +232,7 @@ return {
       -- go-based: gopls (brew install go)
       vim.lsp.enable({
         "lua_ls",
+        -- "ruff",
         "pyright",
         "ts_ls",
         "rust_analyzer",

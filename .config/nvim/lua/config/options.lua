@@ -35,6 +35,7 @@ opt.wildmenu = true
 opt.ttyfast = true
 opt.errorbells = false
 opt.shortmess:append("atIc")
+opt.autoread = true
 
 -- Backup/Swap/Undo directories
 local data_dir = vim.fn.stdpath("data")
