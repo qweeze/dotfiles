@@ -24,18 +24,24 @@ return {
           return vim.o.columns * 0.4
         end
       end,
-      open_mapping = [[<C-t>]],
       hide_numbers = true,
       shade_filetypes = {},
       shade_terminals = true,
       shading_factor = 2,
       start_in_insert = true,
-      insert_mappings = true,
-      terminal_mappings = true,
       persist_size = true,
       persist_mode = true,
       direction = "float",
       close_on_exit = true,
+      on_exit = function()
+        vim.schedule(function()
+          local all = require("toggleterm.terminal").get_all()
+          if #all > 0 then
+            all[#all]:open()
+            vim.defer_fn(function() vim.cmd("startinsert") end, 50)
+          end
+        end)
+      end,
       shell = vim.o.shell,
       float_opts = {
         border = "curved",
@@ -61,9 +67,15 @@ return {
       on_open = function(term)
         local terms = require("toggleterm.terminal")
         local all_terms = terms.get_all()
-
+        local pos = 1
+        for i, t in ipairs(all_terms) do
+          if t.id == term.id then
+            pos = i
+            break
+          end
+        end
         vim.api.nvim_win_set_config(term.window, {
-          title = " term " .. term.id .. "/" .. #all_terms .. " ",
+          title = " term " .. pos .. "/" .. #all_terms .. " ",
           title_pos = "right",
         })
       end,
@@ -82,8 +94,10 @@ return {
         local term_opts = { buffer = 0 }
         vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], term_opts)
         vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], term_opts)
-        vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], term_opts)
         vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], term_opts)
+
+        -- C-t t: Toggle (close) terminal
+        vim.keymap.set("t", "<C-t>t", "<cmd>ToggleTerm<CR>", term_opts)
 
         -- C-t T: New terminal
         vim.keymap.set("t", "<C-t>T", function()

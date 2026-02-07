@@ -8,6 +8,8 @@ HISTFILE=~/.zsh_history
 HISTSIZE=1000000000
 SAVEHIST=$HISTSIZE
 
+autoload -Uz compinit && compinit
+
 # auto start tmux
 if [ -z "$TMUX" ]
 then
@@ -49,6 +51,7 @@ export PATH="$PATH:$HOME/.cargo/bin"
 export REQUESTS_CA_BUNDLE="$HOME/ca.pem"
 export SSL_CERT_FILE="$HOME/ca.pem"
 export BAT_THEME="gruvbox-dark"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # ipdb debugger
 export PYTHONBREAKPOINT=ipdb.set_trace

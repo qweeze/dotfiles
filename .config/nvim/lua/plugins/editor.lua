@@ -13,6 +13,10 @@ return {
       local wk = require("which-key")
 
       wk.setup({
+        delay = 500,
+        filter = function(mapping)
+          return not (mapping.lhs and mapping.lhs:match("^g"))
+        end,
         plugins = {
           marks = true,
           registers = true,
@@ -27,7 +31,7 @@ return {
             windows = true,
             nav = true,
             z = true,
-            g = true,
+            g = false,
           },
         },
         icons = {
