@@ -72,6 +72,14 @@ autocmd("FileType", {
   end,
 })
 
+-- Auto-reload files changed outside of Neovim
+augroup("AutoReload", { clear = true })
+autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
+  group = "AutoReload",
+  pattern = "*",
+  command = "checktime",
+})
+
 -- Auto-resize splits when window is resized
 augroup("ResizeSplits", { clear = true })
 autocmd("VimResized", {
