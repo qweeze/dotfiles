@@ -18,5 +18,5 @@ heredoc> c = get_config()
 c.InteractiveShellApp.extensions.append("autoreload")
 EOF
 
-cp socksproxy /usr/local/bin/
+link socksproxy /usr/local/bin/socksproxy
 ```
