@@ -23,33 +23,14 @@ source <(fzf --zsh)
 alias vi=nvim
 alias ls="ls --color=auto"
 
-# socksproxy
-socksproxy () {
-    if [[ "$1" == "start" ]]
-    then
-	    pkill -f sockstunnel
-	    pkill -f socks-to-http
-	    echo "Starting SOCKS5 proxy at SOCKS_PROXY=socks5://127.0.0.1:1080"
-	    bash -c "exec -a sockstunnel autossh -M 0 -D 1080 -q -C -N qweeze@box &"
-        # https://github.com/KaranGauswami/socks-to-http-proxy
-	    echo "Starting HTTP proxy at HTTPS_PROXY=http://127.0.0.1:8080"
-        bash -c "exec -a socks-to-http sthp -d -p 8080 -s 127.0.0.1:1080 &"
-    elif [[ $1 == "stop" ]]
-    then
-	    echo "Stopping SOCKS5 proxy"
-	    pkill -f sockstunnel
-	    echo "Stopping HTTP proxy"
-	    pkill -f socks-to-http
-    else
-	    echo "Usage: socksproxy [start|stop]"
-    fi
-}
+export NO_PROXY=localhost,127.0.0.1
 
 export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 
 export REQUESTS_CA_BUNDLE="$HOME/ca.pem"
 export SSL_CERT_FILE="$HOME/ca.pem"
+export NODE_EXTRA_CA_CERTS="$HOME/ca.pem"
 export BAT_THEME="gruvbox-dark"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
@@ -91,3 +72,5 @@ venv
 
 [[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
 export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+
+[[ ~/.zsh_profile ]] && source ~/.zsh_profile

@@ -1,0 +1,203 @@
+#!/usr/bin/env bash
+
+set -u
+
+SCRIPT_NAME="$(basename "$0")"
+
+SOCKS_PORT="${SOCKS_PORT:-1080}"
+HTTP_PORT="${HTTP_PORT:-8080}"
+DEFAULT_HOST="box"
+
+SOCKS_PROC_NAME="sockstunnel"
+HTTP_PROC_NAME="socks-to-http"
+
+usage() {
+  cat <<EOF
+Usage:
+  $SCRIPT_NAME start [--host HOST]
+  $SCRIPT_NAME stop
+  $SCRIPT_NAME restart [--host HOST]
+  $SCRIPT_NAME status
+
+Examples:
+  $SCRIPT_NAME start
+  $SCRIPT_NAME start --host myhost
+  $SCRIPT_NAME stop
+EOF
+}
+
+log() {
+  printf '%s\n' "$*"
+}
+
+err() {
+  printf 'Error: %s\n' "$*" >&2
+}
+
+require_cmd() {
+  local cmd="$1"
+  command -v "$cmd" >/dev/null 2>&1 || {
+    err "Required command not found: $cmd"
+    return 1
+  }
+}
+
+host_exists_in_ssh_config() {
+  local host="$1"
+  ssh -G "$host" >/dev/null 2>&1
+}
+
+is_running() {
+  local pattern="$1"
+  pgrep -f "$pattern" >/dev/null 2>&1
+}
+
+stop_proxy() {
+  local rc=0
+
+  if is_running "$SOCKS_PROC_NAME"; then
+    log "Stopping SOCKS5 proxy"
+    pkill -f "$SOCKS_PROC_NAME" || rc=1
+  else
+    log "SOCKS5 proxy is not running"
+  fi
+
+  if is_running "$HTTP_PROC_NAME"; then
+    log "Stopping HTTP proxy"
+    pkill -f "$HTTP_PROC_NAME" || rc=1
+  else
+    log "HTTP proxy is not running"
+  fi
+
+  return "$rc"
+}
+
+start_proxy() {
+  local host="$1"
+  local autossh_pid
+  local sthp_pid
+
+  require_cmd autossh || return 1
+  require_cmd sthp || return 1
+  require_cmd ssh || return 1
+  require_cmd pgrep || return 1
+  require_cmd pkill || return 1
+
+  if ! host_exists_in_ssh_config "$host"; then
+    err "SSH host '$host' was not found in your SSH configuration"
+    return 1
+  fi
+
+  # Clean up any old processes first.
+  stop_proxy >/dev/null 2>&1 || true
+
+  log "Starting SOCKS5 proxy via '$host' at SOCKS_PROXY=socks5://127.0.0.1:${SOCKS_PORT}"
+  bash -c "exec -a ${SOCKS_PROC_NAME} autossh -M 0 -D ${SOCKS_PORT} -q -C -N ${host}" &
+  autossh_pid=$!
+
+  sleep 0.5
+  if ! kill -0 "$autossh_pid" 2>/dev/null; then
+    err "autossh failed to start"
+    return 1
+  fi
+
+  log "Starting HTTP proxy at HTTP_PROXY=http://127.0.0.1:${HTTP_PORT} and HTTPS_PROXY=http://127.0.0.1:${HTTP_PORT}"
+  bash -c "exec -a ${HTTP_PROC_NAME} sthp -p ${HTTP_PORT} -s 127.0.0.1:${SOCKS_PORT}" >/dev/null 2>&1 &
+  sthp_pid=$!
+
+  sleep 0.5
+  if ! kill -0 "$sthp_pid" 2>/dev/null; then
+    err "sthp failed to start"
+    pkill -f "$SOCKS_PROC_NAME" >/dev/null 2>&1 || true
+    return 1
+  fi
+
+  log "Proxy started successfully."
+  log "  SOCKS_PROXY=socks5://127.0.0.1:${SOCKS_PORT}"
+  log "  HTTP_PROXY=http://127.0.0.1:${HTTP_PORT}"
+  log "  HTTPS_PROXY=http://127.0.0.1:${HTTP_PORT}"
+
+  return 0
+}
+
+status_proxy() {
+  local rc=0
+
+  if is_running "$SOCKS_PROC_NAME"; then
+    log "SOCKS5 proxy: running"
+  else
+    log "SOCKS5 proxy: stopped"
+    rc=1
+  fi
+
+  if is_running "$HTTP_PROC_NAME"; then
+    log "HTTP proxy: running"
+  else
+    log "HTTP proxy: stopped"
+    rc=1
+  fi
+
+  return "$rc"
+}
+
+main() {
+  local action=""
+  local host="$DEFAULT_HOST"
+
+  if [[ $# -lt 1 ]]; then
+    usage
+    return 2
+  fi
+
+  action="$1"
+  shift
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --host)
+        if [[ $# -lt 2 ]]; then
+          err "--host requires a value"
+          return 2
+        fi
+        host="$2"
+        shift 2
+        ;;
+      -h|--help)
+        usage
+        return 0
+        ;;
+      *)
+        err "Unknown argument: $1"
+        usage
+        return 2
+        ;;
+    esac
+  done
+
+  case "$action" in
+    start)
+      start_proxy "$host"
+      ;;
+    stop)
+      stop_proxy
+      ;;
+    restart)
+      stop_proxy || true
+      start_proxy "$host"
+      ;;
+    status)
+      status_proxy
+      ;;
+    -h|--help|help)
+      usage
+      ;;
+    *)
+      err "Unknown action: $action"
+      usage
+      return 2
+      ;;
+  esac
+}
+
+main "$@"
+exit $?

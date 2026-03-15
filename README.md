@@ -17,4 +17,6 @@ cat << EOF > ~/.ipython/profile_default/ipython_config.py
 heredoc> c = get_config()
 c.InteractiveShellApp.extensions.append("autoreload")
 EOF
+
+cp socksproxy /usr/local/bin/
 ```
